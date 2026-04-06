@@ -1,0 +1,28 @@
+{
+  "placeholderImages": [
+    {
+      "id": "his",
+      "description": "Hospital Information System",
+      "imageUrl": "https://picsum.photos/seed/his/1200/800",
+      "imageHint": "hospital technology"
+    },
+    {
+      "id": "erp",
+      "description": "Enterprise Resource Planning",
+      "imageUrl": "https://picsum.photos/seed/erp/1200/800",
+      "imageHint": "business dashboard"
+    },
+    {
+      "id": "nphies",
+      "description": "NPHIES Connect",
+      "imageUrl": "https://picsum.photos/seed/nphies/1200/800",
+      "imageHint": "data network"
+    },
+    {
+      "id": "cdss",
+      "description": "Clinical Decision Support System",
+      "imageUrl": "https://picsum.photos/seed/cdss/1200/800",
+      "imageHint": "doctor computer"
+    }
+  ]
+}
