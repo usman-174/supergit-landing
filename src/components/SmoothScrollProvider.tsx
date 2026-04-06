@@ -14,14 +14,14 @@ export function SmoothScrollProvider({
   useEffect(() => {
     const media = gsap.matchMedia();
 
-    media.add("(min-width: 768px)", () => {
+    media.add("(min-width: 1024px)", () => {
       ScrollSmoother.get()?.kill();
 
       smoother.current = ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
         content: "#smooth-content",
-        smooth: 1.4,
-        smoothTouch: 0.08,
+        smooth: 0.82,
+        smoothTouch: 0,
         effects: true,
         normalizeScroll: true,
         ignoreMobileResize: true,

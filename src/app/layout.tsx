@@ -40,11 +40,11 @@ export default function RootLayout({
       className={`${bodyFont.variable} ${headlineFont.variable}`}
     >
       <body className="font-body antialiased">
+        <AmbientColorShift />
+        <ParallaxBackground />
+        <MagneticCursor />
+        <div className="scroll-progress-bar" />
         <SmoothScrollProvider>
-          <AmbientColorShift />
-          <ParallaxBackground />
-          <MagneticCursor />
-          <div className="scroll-progress-bar" />
           <PageTransition>{children}</PageTransition>
         </SmoothScrollProvider>
         <Toaster />

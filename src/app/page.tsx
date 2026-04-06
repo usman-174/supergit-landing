@@ -15,8 +15,10 @@ import {
 } from "lucide-react";
 
 import { explainTerm } from "@/app/actions";
+import { Footer } from "@/components/layout/footer";
 import { MarqueeBand } from "@/components/MarqueeBand";
 import { VelocityImage } from "@/components/VelocityImage";
+import { FreeConsultationSection } from "@/components/sections/FreeConsultationSection";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { StackedCards } from "@/components/sections/StackedCards";
 import { SplitHeading } from "@/hooks/useSplitReveal";
@@ -136,16 +138,17 @@ export default function Home() {
           <nav className="hidden items-center gap-7 text-sm font-medium text-[#5b483a] lg:flex">
             <a href="#story">Story</a>
             <a href="#products">Products</a>
+            <a href="#consultation">Consultation</a>
             <a href="#explainer">Explainer</a>
             <a href="#contact">Contact</a>
           </nav>
 
           <a
-            href="#contact"
+            href="#consultation"
             data-magnetic
             className="inline-flex items-center gap-2 rounded-full bg-[#16110b] px-4 py-2 text-sm font-semibold text-[#fff8ee] transition-transform hover:-translate-y-0.5"
           >
-            Request demo
+            Free consultation
             <ArrowUpRight className="h-4 w-4" />
           </a>
         </div>
@@ -156,10 +159,7 @@ export default function Home() {
       <MarqueeBand />
       <StackedCards />
 
-      <section
-        id="story"
-        className="relative px-6 py-28 md:px-10 lg:px-16"
-      >
+      <section id="story" className="relative px-6 py-28 md:px-10 lg:px-16">
         <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div className="space-y-8" data-speed="0.9">
             <SectionLabel>Editorial system story</SectionLabel>
@@ -167,7 +167,7 @@ export default function Home() {
               Built to feel deliberate, not decorative.
             </SplitHeading>
             <p className="max-w-xl text-lg leading-8 text-[#5b483a] md:text-xl">
-              The ambition here is not “more animation.” It is weighted motion,
+              The ambition here is not "more animation." It is weighted motion,
               layered depth, and scroll choreography that feels authored. Like
               turning the page of a hardcover object, every section should land
               with intent.
@@ -228,7 +228,7 @@ export default function Home() {
             </SplitHeading>
             <p className="max-w-xl text-lg leading-8 text-[#5b483a] md:text-xl">
               Instead of dumping everything into one repetitive grid, the page
-              uses long-form visual sequencing. Motion doesn’t decorate the
+              uses long-form visual sequencing. Motion doesn't decorate the
               message, it carries hierarchy, mood, and trust.
             </p>
             <div className="grid gap-4">
@@ -302,10 +302,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="explainer"
-        className="relative px-6 py-28 md:px-10 lg:px-16"
-      >
+      <FreeConsultationSection />
+
+      <section id="explainer" className="relative px-6 py-28 md:px-10 lg:px-16">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div className="space-y-8" data-speed="0.9">
             <SectionLabel>AI healthcare term explainer</SectionLabel>
@@ -391,10 +390,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="contact"
-        className="relative px-6 pb-28 pt-10 md:px-10 lg:px-16"
-      >
+      <section id="contact" className="relative px-6 pb-16 pt-10 md:px-10 lg:px-16">
         <div className="mx-auto max-w-7xl rounded-[2.5rem] border border-black/10 bg-[rgba(255,252,247,0.74)] p-8 shadow-[0_34px_100px_rgba(17,12,8,0.12)] backdrop-blur md:p-12">
           <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-end">
             <div className="space-y-8">
@@ -437,6 +433,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 }

@@ -143,19 +143,19 @@ export function HeroSection() {
 
           <div className="hero-cta mt-12 flex flex-wrap gap-4">
             <a
-              href="#story"
+              href="#consultation"
               data-magnetic
               className="inline-flex items-center gap-2 rounded-full bg-[#16110b] px-8 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#fff9f1] transition-transform duration-300 hover:-translate-y-1"
             >
-              Enter the story
+              Free consultation
               <ArrowRight className="h-4 w-4" />
             </a>
             <a
-              href="#explainer"
+              href="#story"
               data-magnetic
               className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/70 px-8 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#16110b] shadow-[0_20px_50px_rgba(17,12,8,0.08)] transition-transform duration-300 hover:-translate-y-1"
             >
-              Try the explainer
+              Enter the story
               <ArrowUpRight className="h-4 w-4" />
             </a>
           </div>
