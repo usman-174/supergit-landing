@@ -71,7 +71,7 @@ export function ParallaxBackground() {
         className="bg-orb-1 absolute -left-[10%] -top-[20%] h-[70vw] w-[70vw] rounded-full"
         style={{
           background:
-            "radial-gradient(circle, rgba(255,153,0,0.22) 0%, rgba(255,153,0,0.06) 50%, transparent 75%)",
+            "radial-gradient(circle, rgba(72,187,255,0.22) 0%, rgba(72,187,255,0.06) 50%, transparent 75%)",
           filter: "blur(44px)",
         }}
       />
@@ -80,7 +80,7 @@ export function ParallaxBackground() {
         className="bg-orb-2 absolute right-[-15%] top-[28%] h-[45vw] w-[45vw] rounded-full"
         style={{
           background:
-            "radial-gradient(circle, rgba(255,180,50,0.15) 0%, rgba(255,120,0,0.05) 50%, transparent 75%)",
+            "radial-gradient(circle, rgba(45,212,191,0.16) 0%, rgba(59,130,246,0.06) 50%, transparent 75%)",
           filter: "blur(64px)",
         }}
       />
@@ -100,13 +100,13 @@ export function ParallaxBackground() {
         className="bg-grid absolute inset-0 opacity-0"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,153,0,0.28) 1px, transparent 1px), linear-gradient(90deg, rgba(255,153,0,0.28) 1px, transparent 1px)",
+            "linear-gradient(rgba(72,187,255,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(72,187,255,0.22) 1px, transparent 1px)",
           backgroundSize: "88px 88px",
           maskImage: "radial-gradient(ellipse at center, black 0%, transparent 72%)",
         }}
       />
 
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,251,244,0.78)_0%,rgba(255,248,239,0.48)_40%,rgba(24,18,13,0.06)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(238,249,255,0.72)_0%,rgba(223,241,250,0.34)_36%,rgba(4,16,26,0.08)_100%)]" />
     </div>
   );
 }

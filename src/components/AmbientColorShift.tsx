@@ -5,10 +5,10 @@ import { useEffect } from "react";
 import { ScrollTrigger } from "@/lib/gsap";
 
 const STOPS = [
-  { progress: 0, hue: 36, sat: 100, light: 50 },
-  { progress: 0.33, hue: 31, sat: 92, light: 49 },
-  { progress: 0.66, hue: 24, sat: 88, light: 46 },
-  { progress: 1, hue: 36, sat: 100, light: 52 },
+  { progress: 0, hue: 191, sat: 94, light: 62 },
+  { progress: 0.33, hue: 201, sat: 92, light: 60 },
+  { progress: 0.66, hue: 174, sat: 78, light: 54 },
+  { progress: 1, hue: 191, sat: 94, light: 62 },
 ];
 
 export function AmbientColorShift() {
