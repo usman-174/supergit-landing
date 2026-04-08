@@ -32,41 +32,41 @@ import {
 import { explainTerm } from "@/app/actions";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
-const presetTerms = ["NPHIES", "EMR", "CDSS", "HIS"];
+const presetTerms = ["NPHIES", "HIS", "CDSS", "ERP", "CCHI", "EMR"];
 const heroPulseHeights = [52, 84, 66, 108, 72, 118, 90];
 
 const signalLoops = [
-  "Doctor command",
-  "AI lab routing",
-  "Radiology desk",
-  "Claims sync",
-  "Care-team telemetry",
-  "Command center",
-  "Decision engine",
-  "Live hospital mesh",
+  "HIS integration",
+  "NPHIES Connect",
+  "CDSS insights",
+  "ERP operations",
+  "Claims processing",
+  "Patient management",
+  "Clinical decisions",
+  "Revenue cycle",
 ];
 
 const heroMiniCards = [
+  // {
+  //   title: "Doctor board",
+  //   value: "184 live",
+  //   body: "Consultants, theatre slots, and ward rounds synced in one control layer.",
+  //   position:
+  //     "left-0 top-12 hidden w-64 rounded-[1.5rem] md:block xl:-left-4 xl:top-16",
+  // },
   {
-    title: "Doctor board",
-    value: "184 live",
-    body: "Consultants, theatre slots, and ward rounds synced in one control layer.",
+    title: "NPHIES Connect",
+    value: "99.2% sync",
+    body: "Claims processing and CCHI compliance running in real time.",
     position:
-      "-left-3 top-10 hidden w-60 rounded-[1.5rem] md:block xl:-left-10 xl:top-14",
+      "-right-16 top-0 hidden w-56 rounded-[1.5rem] sm:block lg:-right-24 xl:-right-32",
   },
   {
-    title: "AI lab",
-    value: "612 runs",
-    body: "Inference batches, triage confidence, and escalation queues stay visible.",
+    title: "CDSS",
+    value: "420+ rules",
+    body: "AI-powered clinical recommendations reducing rejections and improving care.",
     position:
-      "right-0 top-0 hidden w-56 rounded-[1.5rem] sm:block lg:-right-8 xl:-right-10",
-  },
-  {
-    title: "Radiology",
-    value: "06 min TAT",
-    body: "Urgent reads surface early while non-critical studies remain paced and traceable.",
-    position:
-      "bottom-0 left-8 hidden w-64 rounded-[1.5rem] sm:block lg:-bottom-6 xl:left-12",
+      "-bottom-12 -right-16 hidden w-64 rounded-[1.5rem] sm:block lg:-bottom-20 xl:-right-24",
   },
 ];
 
@@ -80,29 +80,30 @@ type CounterMetric = {
 
 const commandMetrics: CounterMetric[] = [
   {
-    label: "Doctors connected",
-    value: 248,
+    label: "Hospitals connected",
+    value: 50,
     suffix: "+",
-    note: "live staff coverage across clinics, wards, and procedure rooms",
+    note: "healthcare facilities powered by SuperGIT across Saudi Arabia",
   },
   {
-    label: "AI lab confidence",
+    label: "CDSS accuracy",
     value: 98.4,
     suffix: "%",
     decimals: 1,
-    note: "model-assisted checks with real-time exception review",
+    note: "AI-powered clinical decision support with real-time evidence review",
   },
   {
-    label: "Radiology turnaround",
-    value: 6,
-    suffix: "m",
-    note: "average urgent imaging response inside the command layer",
-  },
-  {
-    label: "Claims cleared",
+    label: "Claims processed",
     value: 1240,
     suffix: "+",
-    note: "submission and payer sync events processed per shift",
+    note: "NPHIES-compliant submissions and payer sync events per day",
+  },
+  {
+    label: "Uptime guaranteed",
+    value: 99.9,
+    suffix: "%",
+    decimals: 1,
+    note: "24/7 operational reliability for critical healthcare systems",
   },
 ];
 
@@ -121,91 +122,91 @@ type ModuleCard = {
 const moduleCards: ModuleCard[] = [
   {
     icon: Stethoscope,
-    eyebrow: "Doctor cockpit",
-    title: "Give clinicians one calm surface for rounds, consults, and discharge pressure.",
-    body: "A dense but legible command view for doctors that balances appointments, inpatient flow, escalations, and follow-up actions without dropping context.",
+    eyebrow: "Hospital Information System",
+    title: "A fully integrated platform to manage every aspect of your healthcare facility.",
+    body: "Centralize patient management, billing, medical records, appointments, and operational workflows into one streamlined system built for Saudi hospitals.",
     statValue: 93,
     statSuffix: "%",
-    statLabel: "round completion",
-    tracks: ["Ward coverage", "Consult queue", "Discharge readiness"],
+    statLabel: "operational efficiency",
+    tracks: ["Patient records", "Appointment scheduling", "Billing management"],
   },
   {
     icon: BrainCircuit,
-    eyebrow: "AI lab orchestration",
-    title: "Make AI work look supervised, measurable, and production-ready.",
-    body: "Inference volume, confidence drift, approval gates, and model queue health sit side by side so the AI lab reads like an operational unit, not a black box.",
+    eyebrow: "Clinical Decision Support",
+    title: "AI-powered clinical recommendations that reduce rejections and improve care.",
+    body: "Our CDSS provides evidence-based recommendations to healthcare professionals, improving diagnostic accuracy, patient outcomes, and claims approval rates.",
     statValue: 612,
     statSuffix: "+",
-    statLabel: "daily inference runs",
-    tracks: ["Queue health", "Confidence watch", "Escalation routing"],
+    statLabel: "clinical rules active",
+    tracks: ["Diagnostic accuracy", "Rejection reduction", "Evidence review"],
   },
   {
     icon: Activity,
-    eyebrow: "Radiology desk",
-    title: "Surface imaging demand with throughput, urgency, and team workload in view.",
-    body: "Radiology panels combine queue depth, first-read timers, modality mix, and exception alerts so high-pressure imaging work never feels hidden.",
-    statValue: 7,
-    statSuffix: "m",
-    statLabel: "first-read target",
-    tracks: ["Urgent studies", "MRI / CT balance", "Result release cadence"],
-  },
-  {
-    icon: ShieldCheck,
-    eyebrow: "Claims command",
-    title: "Connect finance and clinical events without leaving the dashboard language.",
-    body: "Claims status, denial risk, NPHIES handoffs, and payer latency are presented in the same visual system as care operations, so trust carries across the page.",
+    eyebrow: "NPHIES Connect",
+    title: "Seamless integration with NPHIES for efficient claims processing and CCHI compliance.",
+    body: "Ensure smooth data exchange across healthcare systems with our certified NPHIES integration platform, built specifically for the Saudi insurance sector.",
     statValue: 99.2,
     statSuffix: "%",
     statDecimals: 1,
     statLabel: "clean submission rate",
-    tracks: ["Eligibility sync", "Denial prevention", "Payer response watch"],
+    tracks: ["Claims processing", "CCHI compliance", "Payer integration"],
+  },
+  {
+    icon: ShieldCheck,
+    eyebrow: "Enterprise Resource Planning",
+    title: "Streamline operations with integrated finance, HR, procurement, and more.",
+    body: "An integrated ERP system designed for healthcare facilities, covering financial management, human resources, supply chain, and procurement in one platform.",
+    statValue: 40,
+    statSuffix: "%",
+    statLabel: "cost reduction",
+    tracks: ["Financial management", "HR operations", "Supply chain"],
   },
 ];
 
 const workflowRows = [
   {
-    title: "Doctors",
-    detail: "184 clinicians online",
+    title: "HIS",
+    detail: "50+ hospitals live",
     bullets: [
-      "Critical consults promoted into the first decision lane",
-      "Rounds sequenced by discharge confidence and room readiness",
-      "Procedure blocks balanced against staffing gaps in real time",
+      "Patient records, appointments, and billing managed in one integrated system",
+      "Inpatient and outpatient care coordinated with real-time bed management",
+      "Medical records and EMR accessible across all departments instantly",
     ],
   },
   {
-    title: "AI lab",
-    detail: "32 active queues",
+    title: "CDSS",
+    detail: "AI-powered insights",
     bullets: [
-      "Models flagged when confidence slips beyond target range",
-      "Inference batches routed toward human approval when needed",
-      "Escalations land in the same screen as clinical operations",
+      "Evidence-based clinical recommendations reducing diagnostic errors",
+      "Claim rejection rates reduced through intelligent decision support",
+      "Real-time alerts for drug interactions and clinical guideline violations",
     ],
   },
   {
-    title: "Radiology",
-    detail: "61 studies in motion",
+    title: "NPHIES",
+    detail: "CCHI compliant",
     bullets: [
-      "Urgent reads pinned ahead of routine backlog without visual noise",
-      "Modalities grouped by wait-time pressure and specialist availability",
-      "Results release stays tied to downstream care-team actions",
+      "Seamless claims processing with automated payer data exchange",
+      "Eligibility verification and pre-authorization handled in real time",
+      "Denial prevention through compliant submission workflows",
     ],
   },
   {
-    title: "Finance + NPHIES",
-    detail: "Payer sync stable",
+    title: "ERP",
+    detail: "Operations streamlined",
     bullets: [
-      "Clean claims score and exception volume stay visible to operators",
-      "Revenue handoffs reflect actual clinical milestones",
-      "Denial patterns become part of the same command narrative",
+      "Finance, HR, and procurement unified for healthcare facility management",
+      "Supply chain and inventory tracked with automated reorder triggers",
+      "Revenue cycle management aligned with clinical milestones",
     ],
   },
 ];
 
 const contactCards = [
-  { icon: PhoneCall, label: "Phone", value: "+966 12 345 6789" },
-  { icon: Mail, label: "Email", value: "info@supergit.com" },
+  { icon: PhoneCall, label: "Phone", value: "+966 540 408 433" },
+  { icon: Mail, label: "Email", value: "info@super-git.com" },
   { icon: MapPin, label: "Address", value: "Hira Street, Jeddah, KSA" },
-  { icon: Clock3, label: "Hours", value: "Sun - Thu / 9:00 AM - 6:00 PM" },
+  { icon: Clock3, label: "Hours", value: "Open 24/7" },
 ];
 
 const fadeUp = {
@@ -251,6 +252,46 @@ function CountUp({
       data-prefix={prefix}
     >
       {`${prefix}${formatCount(0, decimals)}${suffix}`}
+    </span>
+  );
+}
+
+function AnimatedHeroText() {
+  const [textIndex, setTextIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const texts = [
+    "Transforming healthcare with Vision 2030",
+    "HIS, ERP, NPHIES, and CDSS in one platform.",
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setTextIndex((prev) => (prev + 1) % texts.length);
+        setIsTransitioning(false);
+      }, 300);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <span className="grid">
+      {texts.map((text, i) => (
+        <span
+          key={i}
+          className={[
+            "col-start-1 row-start-1",
+            i === textIndex
+              ? `transition-opacity duration-300 ${isTransitioning ? "opacity-0" : "opacity-100"}`
+              : "invisible",
+          ].join(" ")}
+          aria-hidden={i !== textIndex}
+        >
+          {text}
+        </span>
+      ))}
     </span>
   );
 }
@@ -305,14 +346,14 @@ export default function Home() {
         );
 
       gsap.utils.toArray<HTMLElement>("[data-float-card]").forEach((card, index) => {
-        const yOffset = 12 + index * 6;
-        const xOffset = index % 2 === 0 ? 10 : -10;
+        const yOffset = 4 + index * 2;
+        const xOffset = index % 2 === 0 ? 3 : -3;
 
         gsap.to(card, {
           y: index % 2 === 0 ? -yOffset : yOffset,
           x: xOffset,
-          rotation: index % 2 === 0 ? 1.2 : -1.2,
-          duration: 3.8 + index * 0.6,
+          rotation: index % 2 === 0 ? 0.4 : -0.4,
+          duration: 5.2 + index * 0.8,
           repeat: -1,
           yoyo: true,
           ease: "sine.inOut",
@@ -486,7 +527,7 @@ export default function Home() {
                 SuperGIT
               </p>
               <p className="text-[0.64rem] uppercase tracking-[0.3em] text-[#81a8c5]">
-                Hospital Command Grid
+                Healthcare Solutions
               </p>
             </div>
           </a>
@@ -527,26 +568,26 @@ export default function Home() {
         className="hero-section relative px-4 pb-20 pt-32 md:px-8 md:pb-24 lg:px-12 xl:px-16"
       >
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div className="hero-copy relative z-10 space-y-6">
-            <SectionLabel>Intelligent hospital operations</SectionLabel>
+          <div className="hero-copy relative z-10 space-y-6 pl-0 md:pl-4 lg:pl-0">
+            <SectionLabel>Healthcare technology reimagined</SectionLabel>
 
-            <h1 className="max-w-4xl font-headline text-[clamp(3.2rem,7.8vw,7.3rem)] font-semibold uppercase leading-[0.88] tracking-[-0.05em] text-white">
-              A living system dashboard for doctors, AI lab, and radiology.
+            <h1 className="max-w-4xl font-headline text-[clamp(2.4rem,6vw,5.5rem)] font-semibold uppercase leading-[0.88] tracking-[-0.05em] text-white">
+              <AnimatedHeroText />
             </h1>
 
             <p className="max-w-2xl text-lg leading-8 text-[#9bb4c7] md:text-xl">
-              The homepage should feel like a premium command center, not a static
-              landing page. We combine deep telemetry, animated data surfaces, and
-              cinematic motion so every module looks active, supervised, and ready
-              for high-pressure healthcare operations.
+              SuperGIT delivers cutting-edge healthcare technology solutions for
+              Saudi Arabia. From HIS and ERP to NPHIES integration and AI-powered
+              CDSS, we digitalize hospital operations to improve efficiency and
+              enhance patient care.
             </p>
 
             <div className="flex flex-wrap gap-3">
               {[
-                "Live care-team telemetry",
-                "AI lab oversight",
-                "Radiology queue control",
-                "Claims and NPHIES sync",
+                "Hospital Information System",
+                "ERP Integration",
+                "NPHIES Connect",
+                "AI-powered CDSS",
               ].map((item) => (
                 <div
                   key={item}
@@ -563,7 +604,7 @@ export default function Home() {
                 data-magnetic
                 className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#04101a] transition-transform duration-300 hover:-translate-y-1"
               >
-                Explore systems
+                Explore services
                 <ArrowRight className="h-4 w-4" />
               </a>
               <a
@@ -571,7 +612,7 @@ export default function Home() {
                 data-magnetic
                 className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/6 px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white transition-transform duration-300 hover:-translate-y-1"
               >
-                Open AI explainer
+                Try term decoder
                 <ArrowUpRight className="h-4 w-4 text-[hsl(var(--primary))]" />
               </a>
             </div>
@@ -579,16 +620,16 @@ export default function Home() {
             <div className="grid gap-4 sm:grid-cols-3">
               {[
                 {
-                  title: "14 specialties",
-                  body: "One visual rhythm for outpatient, inpatient, and theatre operations.",
+                  title: "Vision 2030 aligned",
+                  body: "Supporting Saudi Arabia's national strategy for digital transformation in healthcare.",
                 },
                 {
-                  title: "Decision-safe AI",
-                  body: "Machine outputs always sit beside human approval and escalation lanes.",
+                  title: "NPHIES certified",
+                  body: "Seamless integration for efficient claims processing and CCHI compliance.",
                 },
                 {
-                  title: "Screen-first clarity",
-                  body: "Dense information without the clutter and dead SaaS spacing.",
+                  title: "AI-powered CDSS",
+                  body: "Evidence-based clinical recommendations that reduce claim rejections and improve care.",
                 },
               ].map((item) => (
                 <div
@@ -615,10 +656,10 @@ export default function Home() {
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div>
                     <p className="text-[0.7rem] font-semibold uppercase tracking-[0.32em] text-[hsl(var(--primary))]">
-                      Hospital command grid
+                      SuperGIT command center
                     </p>
                     <p className="mt-3 font-headline text-3xl font-semibold uppercase leading-none text-white md:text-4xl">
-                      Multi-screen orchestration layer
+                      Healthcare operations platform
                     </p>
                   </div>
                   <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#b7d0e0]">
@@ -632,10 +673,10 @@ export default function Home() {
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <p className="text-[0.68rem] uppercase tracking-[0.28em] text-[#87b8d8]">
-                          Admissions pulse
+                          HIS coverage
                         </p>
                         <p className="mt-3 text-3xl font-semibold text-white">
-                          84% staff aligned
+                          98% claim accuracy
                         </p>
                       </div>
                       <div className="rounded-2xl border border-[hsl(var(--primary))]/20 bg-[hsl(var(--primary))]/10 p-3 text-[hsl(var(--primary))]">
@@ -643,15 +684,15 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div className="mt-6 grid h-40 grid-cols-7 items-end gap-3">
+                    <div className="mt-6 space-y-2">
                       {heroPulseHeights.map((height, index) => (
                         <div
                           key={`${height}-${index}`}
-                          className="relative h-full overflow-hidden rounded-full bg-white/5"
+                          className="relative h-8 overflow-hidden rounded-full bg-white/5"
                         >
                           <div
-                            className="pulse-bar absolute inset-x-0 bottom-0 rounded-full bg-gradient-to-t from-[#34d399] via-[hsl(var(--primary))] to-[#9be7ff]"
-                            style={{ height }}
+                            className="pulse-bar absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#34d399] via-[hsl(var(--primary))] to-[#9be7ff]"
+                            style={{ width: `${(height / 120) * 100}%` }}
                           />
                         </div>
                       ))}
@@ -660,32 +701,32 @@ export default function Home() {
                     <div className="mt-6 grid gap-3 sm:grid-cols-3">
                       {[
                         {
-                          label: "Doctor capacity",
-                          value: "92%",
-                          tone: "Schedules stable and balanced against escalation risk.",
+                          label: "NPHIES sync",
+                          value: "99.2%",
+                          tone: "Clean claims submission with real-time payer compliance checks.",
                         },
                         {
-                          label: "AI triage",
-                          value: "31 queues",
-                          tone: "Inference lanes supervised with approval checkpoints.",
+                          label: "CDSS alerts",
+                          value: "420+ rules",
+                          tone: "Evidence-based clinical recommendations reducing rejections.",
                         },
                         {
-                          label: "Radiology ready",
-                          value: "67 studies",
-                          tone: "Urgent reads stay highlighted without overwhelming the screen.",
+                          label: "ERP modules",
+                          value: "12 active",
+                          tone: "Finance, HR, procurement, and supply chain running in sync.",
                         },
                       ].map((item) => (
                         <div
                           key={item.label}
-                          className="rounded-[1.4rem] border border-white/10 bg-white/[0.04] p-4"
+                          className="rounded-[1.4rem] border border-white/10 bg-white/[0.04] p-4 overflow-hidden"
                         >
-                          <p className="text-[0.68rem] uppercase tracking-[0.24em] text-[#8cb1cb]">
+                          <p className="text-[0.68rem] uppercase tracking-[0.24em] text-[#8cb1cb] truncate">
                             {item.label}
                           </p>
-                          <p className="mt-3 text-xl font-semibold text-white">
+                          <p className="mt-3 text-xl font-semibold text-white truncate">
                             {item.value}
                           </p>
-                          <p className="mt-3 text-xs leading-6 text-[#7d9ab1]">
+                          <p className="mt-3 text-xs leading-6 text-[#7d9ab1] line-clamp-3">
                             {item.tone}
                           </p>
                         </div>
@@ -697,21 +738,21 @@ export default function Home() {
                     {[
                       {
                         icon: HeartPulse,
-                        title: "Doctor sync",
-                        value: "27 critical consults",
-                        body: "Rounds, consults, and specialist escalation stay pinned to staffing reality.",
+                        title: "Patient management",
+                        value: "1,240+ records",
+                        body: "Inpatient, outpatient, appointments, and medical records centralized in one system.",
                       },
                       {
                         icon: Cpu,
-                        title: "AI lab confidence",
+                        title: "CDSS confidence",
                         value: "98.4% verified",
-                        body: "Model outputs remain fast, monitored, and routed back into clinician review.",
+                        body: "AI-powered clinical recommendations with evidence-based decision support for clinicians.",
                       },
                       {
                         icon: Workflow,
-                        title: "Radiology throughput",
-                        value: "06 min first read",
-                        body: "Urgent studies and backlog movement appear as active lanes, not static numbers.",
+                        title: "NPHIES compliance",
+                        value: "CCHI aligned",
+                        body: "Seamless claims processing and data exchange meeting Saudi healthcare standards.",
                       },
                     ].map((item) => {
                       const Icon = item.icon;
@@ -751,7 +792,7 @@ export default function Home() {
                 data-float-card
                 whileHover={{ y: -6, scale: 1.02 }}
                 transition={{ duration: 0.35, ease: "easeOut" }}
-                className={`hero-float-card absolute border border-white/10 bg-[rgba(8,23,35,0.86)] p-4 shadow-[0_22px_70px_rgba(0,0,0,0.28)] backdrop-blur ${card.position}`}
+                className={`hero-float-card absolute z-20 border border-white/10 bg-[rgba(8,23,35,0.86)] p-4 shadow-[0_22px_70px_rgba(0,0,0,0.28)] backdrop-blur ${card.position}`}
               >
                 <p className="text-[0.66rem] uppercase tracking-[0.28em] text-[hsl(var(--primary))]">
                   {card.title}
@@ -827,15 +868,14 @@ export default function Home() {
       <section id="systems" className="relative px-4 py-24 md:px-8 lg:px-12 xl:px-16">
         <div className="mx-auto max-w-7xl">
           <motion.div {...fadeUp} className="max-w-3xl space-y-6">
-            <SectionLabel>System modules</SectionLabel>
+            <SectionLabel>Our services</SectionLabel>
             <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-white md:text-6xl">
-              Each surface should feel like an advanced hospital screen, not a
-              marketing card.
+              Comprehensive healthcare solutions built for Saudi Arabia.
             </h2>
             <p className="text-lg leading-8 text-[#97b0c3] md:text-xl">
-              The visual language is darker, more operational, and more alive. We
-              use motion to suggest constant supervision, while the cards stay calm
-              enough to feel trustworthy in healthcare.
+              From HIS and ERP to NPHIES integration and AI-powered clinical decision
+              support, every module is designed to improve efficiency and enhance
+              patient care across your facility.
             </p>
           </motion.div>
 
@@ -917,23 +957,22 @@ export default function Home() {
       <section className="relative px-4 pb-24 md:px-8 lg:px-12 xl:px-16">
         <div className="mx-auto grid max-w-7xl gap-8 xl:grid-cols-[0.86fr_1.14fr]">
           <motion.div {...fadeUp} className="space-y-7">
-            <SectionLabel>Command choreography</SectionLabel>
+            <SectionLabel>About SuperGIT</SectionLabel>
             <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-white md:text-6xl">
-              The page should read like one connected operations mesh.
+              Transforming healthcare in Saudi Arabia with Vision 2030.
             </h2>
             <p className="text-lg leading-8 text-[#97b0c3] md:text-xl">
-              Instead of isolated feature blocks, we stage doctors, AI lab,
-              radiology, and claims as neighboring lanes inside a single system.
-              That gives the interface more gravity and makes the motion feel
-              purposeful.
+              At SuperGIT, we deliver cutting-edge technology solutions to digitalize
+              healthcare operations, improve efficiency, and enhance patient care —
+              particularly for acute and critical care in hospital settings.
             </p>
 
             <div className="grid gap-3">
               {[
-                "Floating cards keep the hero active without feeling noisy.",
-                "Counters wake up only when they enter view.",
-                "Loop bands reinforce the multi-system environment.",
-                "Panel motion stays smooth and controlled, like a live console.",
+                "Healthcare technology expertise tailored to the insurance sector.",
+                "Unique CDSS products that reduce claim rejection rates significantly.",
+                "Cost-effective operations while enhancing patient satisfaction.",
+                "Aligned with Saudi Arabia's Vision 2030 digital transformation strategy.",
               ].map((item) => (
                 <div
                   key={item}
@@ -996,14 +1035,14 @@ export default function Home() {
       <section id="explainer" className="relative px-4 py-24 md:px-8 lg:px-12 xl:px-16">
         <div className="mx-auto grid max-w-7xl gap-8 xl:grid-cols-[0.82fr_1.18fr] xl:items-start">
           <motion.div {...fadeUp} className="space-y-7">
-            <SectionLabel>AI clinical explainer</SectionLabel>
+            <SectionLabel>Healthcare term decoder</SectionLabel>
             <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-white md:text-6xl">
-              Keep the explainer inside the dashboard language.
+              Understand healthcare technology terms instantly.
             </h2>
             <p className="text-lg leading-8 text-[#97b0c3] md:text-xl">
-              The tool should still feel useful, but now it belongs to a live
-              healthcare system view. It reads more like a clinical intelligence
-              console than a standalone form.
+              Get plain-language explanations for clinical, operational, and claims
+              terms. Built for teams working across hospital operations and insurance
+              workflows in Saudi Arabia.
             </p>
 
             <div className="flex flex-wrap gap-3">
@@ -1026,12 +1065,12 @@ export default function Home() {
 
             <div className="rounded-[1.8rem] border border-white/10 bg-[rgba(7,23,35,0.72)] p-6">
               <p className="text-[0.68rem] uppercase tracking-[0.28em] text-[hsl(var(--primary))]">
-                Decoder status
+                Knowledge base
               </p>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
                 <div className="rounded-[1.3rem] border border-white/10 bg-white/[0.04] p-4">
                   <p className="text-[0.66rem] uppercase tracking-[0.24em] text-[#8cb3cf]">
-                    Glossary depth
+                    Healthcare terms
                   </p>
                   <p className="mt-3 text-2xl font-semibold text-white">
                     <CountUp value={420} suffix="+" />
@@ -1039,7 +1078,7 @@ export default function Home() {
                 </div>
                 <div className="rounded-[1.3rem] border border-white/10 bg-white/[0.04] p-4">
                   <p className="text-[0.66rem] uppercase tracking-[0.24em] text-[#8cb3cf]">
-                    Response clarity
+                    Response accuracy
                   </p>
                   <p className="mt-3 text-2xl font-semibold text-white">
                     <CountUp value={96} suffix="%" />
@@ -1057,10 +1096,10 @@ export default function Home() {
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
                   <p className="text-[0.68rem] uppercase tracking-[0.3em] text-[hsl(var(--primary))]">
-                    Clinical intelligence decoder
+                    Healthcare term decoder
                   </p>
                   <p className="mt-3 font-headline text-3xl font-semibold uppercase leading-none text-white">
-                    Explain the term fast
+                    Get instant explanations
                   </p>
                 </div>
                 <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[0.68rem] uppercase tracking-[0.24em] text-[#b8d2e2]">
@@ -1076,7 +1115,7 @@ export default function Home() {
                   id="term"
                   value={term}
                   onChange={(event) => setTerm(event.target.value)}
-                  placeholder="Type NPHIES, EMR, CDSS, or HIS"
+                  placeholder="Type NPHIES, HIS, CDSS, ERP, CCHI, or EMR"
                   className="w-full rounded-[1.5rem] border border-white/10 bg-[#081b2a] px-5 py-4 text-base text-white outline-none transition-colors placeholder:text-[#63829d] focus:border-[hsl(var(--primary))] focus:shadow-[0_0_0_1px_hsl(var(--primary))]"
                 />
               </label>
@@ -1084,7 +1123,7 @@ export default function Home() {
               <div className="flex flex-wrap items-center justify-between gap-4 rounded-[1.6rem] border border-white/10 bg-white/[0.04] px-4 py-4">
                 <div className="text-sm leading-7 text-[#9bb5c8]">
                   Plain-language answers for teams working across clinical,
-                  operational, and claims workflows.
+                  operational, and insurance workflows in Saudi Arabia.
                 </div>
                 <button
                   type="submit"
@@ -1117,7 +1156,7 @@ export default function Home() {
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="h-5 w-5 text-[hsl(var(--primary))]" />
                   <p className="text-[0.7rem] uppercase tracking-[0.28em] text-[hsl(var(--primary))]">
-                    Plain-language explanation
+                    Healthcare explanation
                   </p>
                 </div>
                 <p className="mt-4 text-base leading-8 text-[#d7ebf7]">
@@ -1126,8 +1165,8 @@ export default function Home() {
               </motion.div>
             ) : (
               <div className="mt-6 rounded-[1.8rem] border border-dashed border-white/10 p-6 text-sm leading-7 text-[#809ab0]">
-                Ask for a term and the response appears here as a clinical command
-                note instead of a generic app panel.
+                Ask for a healthcare term and get a plain-language explanation instantly.
+                
               </div>
             )}
           </motion.div>
@@ -1138,20 +1177,19 @@ export default function Home() {
         <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.4rem] border border-white/10 bg-[linear-gradient(135deg,rgba(7,23,35,0.94)_0%,rgba(9,29,43,0.9)_50%,rgba(11,48,64,0.9)_100%)] p-8 shadow-[0_38px_120px_rgba(0,0,0,0.3)] md:p-10">
           <div className="grid gap-10 xl:grid-cols-[0.95fr_1.05fr] xl:items-center">
             <motion.div {...fadeUp} className="space-y-7">
-              <SectionLabel>Consultation flow</SectionLabel>
+              <SectionLabel>Get started</SectionLabel>
               <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-white md:text-6xl">
-                Bring the same command-center thinking into the actual product build.
+                Experience healthcare reimagined with SuperGIT.
               </h2>
               <p className="text-lg leading-8 text-[#a2bdd0] md:text-xl">
-                We can turn this landing direction into a full product narrative:
-                hospital operations, radiology, AI lab governance, claims, and the
-                live system language that ties them together.
+                Let us show you how HIS, ERP, NPHIES Connect, and CDSS work together
+                to transform your facility's operations and improve patient care.
               </p>
 
               <div className="grid gap-3">
                 {[
-                  "Architecture workshop focused on your core system screens.",
-                  "Motion rules that scale across real product modules.",
+                  "Architecture workshop focused on your hospital's core workflows.",
+                  "Integration planning for NPHIES, HIS, and CDSS deployment.",
                   "A visual system that feels premium without losing medical trust.",
                 ].map((item) => (
                   <div
@@ -1177,7 +1215,7 @@ export default function Home() {
                   data-magnetic
                   className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white transition-transform hover:-translate-y-0.5"
                 >
-                  Review the dashboard
+                  Explore our services
                   <ArrowUpRight className="h-4 w-4 text-[hsl(var(--primary))]" />
                 </a>
               </div>
@@ -1188,22 +1226,22 @@ export default function Home() {
                 {
                   icon: CalendarClock,
                   title: "48h kickoff",
-                  body: "Fast discovery, screen audit, and initial direction for the command-center language.",
+                  body: "Fast discovery, system audit, and initial direction for your healthcare platform.",
                 },
                 {
                   icon: BrainCircuit,
-                  title: "AI-ready patterns",
-                  body: "System cards and telemetry designed to support real inference and approval states.",
+                  title: "AI-powered CDSS",
+                  body: "Clinical decision support designed to reduce rejections and improve diagnostics.",
                 },
                 {
                   icon: Workflow,
-                  title: "Flow mapping",
-                  body: "Doctor, radiology, and claims lanes connected as one product story.",
+                  title: "NPHIES integration",
+                  body: "Certified integration for seamless claims processing and CCHI compliance.",
                 },
                 {
                   icon: ShieldCheck,
-                  title: "Trust-first polish",
-                  body: "Motion, density, and hierarchy tuned for healthcare credibility.",
+                  title: "Vision 2030 ready",
+                  body: "Solutions aligned with Saudi Arabia's digital healthcare transformation strategy.",
                 },
               ].map((item, index) => {
                 const Icon = item.icon;
@@ -1242,12 +1280,12 @@ export default function Home() {
             <motion.div {...fadeUp} className="space-y-6">
               <SectionLabel>Contact</SectionLabel>
               <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-white md:text-6xl">
-                Ready to make the whole site feel like a real hospital command screen?
+                Ready to transform your healthcare operations?
               </h2>
               <p className="max-w-2xl text-lg leading-8 text-[#9bb4c7] md:text-xl">
-                The new direction is darker, more alive, and more system-driven. It
-                gives doctors, AI lab, radiology, and claims the kind of visual
-                seriousness their screens deserve.
+                SuperGIT delivers HIS, ERP, NPHIES Connect, and CDSS — the integrated
+                solutions your facility needs to thrive in Saudi Arabia's digital
+                healthcare future.
               </p>
             </motion.div>
 
@@ -1278,8 +1316,8 @@ export default function Home() {
           </div>
 
           <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-[#88a6bc] md:flex-row md:items-center md:justify-between">
-            <p>SuperGIT Hospital Command Grid. Built for doctors, AI lab, radiology, and claims.</p>
-            <p>Motion by design: floating cards, counters, loop bands, and live telemetry.</p>
+            <p>Copyright &copy; 2026 SuperGIT. All rights reserved.</p>
+            <p>Hira Street, Jeddah, Saudi Arabia &middot; Open 24/7</p>
           </div>
         </div>
       </section>
