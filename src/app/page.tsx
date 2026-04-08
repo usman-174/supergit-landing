@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  type ChangeEvent,
   type CSSProperties,
   type FormEvent,
   useEffect,
@@ -256,6 +257,36 @@ function CountUp({
   );
 }
 
+type ContactFormValues = {
+  firstName: string;
+  lastName: string;
+  service: string;
+  phone: string;
+  date: string;
+  time: string;
+  message: string;
+};
+
+type ContactFormErrors = Partial<Record<keyof ContactFormValues, string>>;
+
+const initialContactForm: ContactFormValues = {
+  firstName: "",
+  lastName: "",
+  service: "",
+  phone: "",
+  date: "",
+  time: "",
+  message: "",
+};
+
+const serviceOptions = [
+  "Neurology",
+  "Cardiology",
+  "Dental",
+  "Ophthalmology",
+  "Other service",
+];
+
 function AnimatedHeroText() {
   const [textIndex, setTextIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -302,6 +333,69 @@ export default function Home() {
   const [explanation, setExplanation] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [contactValues, setContactValues] =
+    useState<ContactFormValues>(initialContactForm);
+  const [contactErrors, setContactErrors] = useState<ContactFormErrors>({});
+  const [contactSuccess, setContactSuccess] = useState(false);
+
+  const validateContactForm = (values: ContactFormValues) => {
+    const errors: ContactFormErrors = {};
+    const phonePattern = /^\+?[0-9\s()-]{8,20}$/;
+
+    if (!values.firstName.trim()) errors.firstName = "First name is required.";
+    if (!values.lastName.trim()) errors.lastName = "Last name is required.";
+    if (!values.service) errors.service = "Please select a service.";
+
+    if (!values.phone.trim()) {
+      errors.phone = "Phone number is required.";
+    } else if (!phonePattern.test(values.phone.trim())) {
+      errors.phone = "Enter a valid phone number.";
+    }
+
+    if (!values.date) {
+      errors.date = "Please choose a date.";
+    }
+
+    if (!values.time) {
+      errors.time = "Please choose a time.";
+    }
+
+    if (!values.message.trim()) {
+      errors.message = "Message is required.";
+    } else if (values.message.trim().length < 15) {
+      errors.message = "Message should be at least 15 characters.";
+    }
+
+    return errors;
+  };
+
+  const handleContactFieldChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+
+    setContactValues((prev) => ({ ...prev, [name]: value }));
+    setContactSuccess(false);
+
+    if (contactErrors[name as keyof ContactFormValues]) {
+      setContactErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const handleContactSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const errors = validateContactForm(contactValues);
+    setContactErrors(errors);
+
+    if (Object.keys(errors).length > 0) {
+      setContactSuccess(false);
+      return;
+    }
+
+    setContactSuccess(true);
+    setContactValues(initialContactForm);
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -1314,6 +1408,181 @@ export default function Home() {
               })}
             </div>
           </div>
+
+          <motion.form
+            {...fadeUp}
+            onSubmit={handleContactSubmit}
+            className="mt-8 grid gap-4 rounded-[1.8rem] border border-white/10 bg-[rgba(5,18,29,0.82)] p-6 md:grid-cols-2"
+          >
+            <div className="space-y-2">
+              <label
+                htmlFor="contact-first-name"
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#8db3cf]"
+              >
+                First name
+              </label>
+              <input
+                id="contact-first-name"
+                name="firstName"
+                type="text"
+                value={contactValues.firstName}
+                onChange={handleContactFieldChange}
+                placeholder="Ahmed"
+                className="w-full rounded-2xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
+              />
+              {contactErrors.firstName ? (
+                <p className="text-xs text-[#fda4af]">{contactErrors.firstName}</p>
+              ) : null}
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="contact-last-name"
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#8db3cf]"
+              >
+                Last name
+              </label>
+              <input
+                id="contact-last-name"
+                name="lastName"
+                type="text"
+                value={contactValues.lastName}
+                onChange={handleContactFieldChange}
+                placeholder="Alqahtani"
+                className="w-full rounded-2xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
+              />
+              {contactErrors.lastName ? (
+                <p className="text-xs text-[#fda4af]">{contactErrors.lastName}</p>
+              ) : null}
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="contact-service"
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#8db3cf]"
+              >
+                Select service
+              </label>
+              <select
+                id="contact-service"
+                name="service"
+                value={contactValues.service}
+                onChange={handleContactFieldChange}
+                className="w-full rounded-2xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
+              >
+                <option value="" className="bg-[#0a1e2e] text-[#9cb7ca]">
+                  Select a service
+                </option>
+                {serviceOptions.map((service) => (
+                  <option key={service} value={service} className="bg-[#0a1e2e] text-white">
+                    {service}
+                  </option>
+                ))}
+              </select>
+              {contactErrors.service ? (
+                <p className="text-xs text-[#fda4af]">{contactErrors.service}</p>
+              ) : null}
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="contact-phone"
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#8db3cf]"
+              >
+                Phone
+              </label>
+              <input
+                id="contact-phone"
+                name="phone"
+                type="tel"
+                value={contactValues.phone}
+                onChange={handleContactFieldChange}
+                placeholder="+966 5X XXX XXXX"
+                className="w-full rounded-2xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
+              />
+              {contactErrors.phone ? (
+                <p className="text-xs text-[#fda4af]">{contactErrors.phone}</p>
+              ) : null}
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="contact-date"
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#8db3cf]"
+              >
+                Date
+              </label>
+              <input
+                id="contact-date"
+                name="date"
+                type="date"
+                value={contactValues.date}
+                onChange={handleContactFieldChange}
+                className="w-full rounded-2xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white outline-none transition-colors focus:border-[hsl(var(--primary))]/55"
+              />
+              {contactErrors.date ? (
+                <p className="text-xs text-[#fda4af]">{contactErrors.date}</p>
+              ) : null}
+            </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="contact-time"
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#8db3cf]"
+              >
+                Time
+              </label>
+              <input
+                id="contact-time"
+                name="time"
+                type="time"
+                value={contactValues.time}
+                onChange={handleContactFieldChange}
+                className="w-full rounded-2xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white outline-none transition-colors focus:border-[hsl(var(--primary))]/55"
+              />
+              {contactErrors.time ? (
+                <p className="text-xs text-[#fda4af]">{contactErrors.time}</p>
+              ) : null}
+            </div>
+
+            <div className="space-y-2 md:col-span-2">
+              <label
+                htmlFor="contact-message"
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#8db3cf]"
+              >
+                Message
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                rows={4}
+                value={contactValues.message}
+                onChange={handleContactFieldChange}
+                placeholder="Tell us about your requirement."
+                className="w-full resize-none rounded-2xl border border-white/12 bg-white/5 px-4 py-3 text-sm leading-6 text-white outline-none transition-colors placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
+              />
+              {contactErrors.message ? (
+                <p className="text-xs text-[#fda4af]">{contactErrors.message}</p>
+              ) : null}
+            </div>
+
+            <div className="md:col-span-2">
+              <button
+                type="submit"
+                data-magnetic
+                className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-7 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#04101a] transition-transform hover:-translate-y-0.5"
+              >
+                Start conversation
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+
+            {contactSuccess ? (
+              <p className="md:col-span-2 text-sm text-[#86efac]">
+                Your request has been captured. We will contact you shortly.
+              </p>
+            ) : null}
+          </motion.form>
 
           <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-[#88a6bc] md:flex-row md:items-center md:justify-between">
             <p>Copyright &copy; 2026 SuperGIT. All rights reserved.</p>
