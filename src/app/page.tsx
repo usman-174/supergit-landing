@@ -10,6 +10,7 @@ import {
   useTransition,
 } from "react";
 import { motion } from "framer-motion";
+import { useTheme } from "next-themes";
 import {
   Activity,
   ArrowRight,
@@ -23,10 +24,12 @@ import {
   HeartPulse,
   Mail,
   MapPin,
+  Moon,
   PhoneCall,
   ShieldCheck,
   Sparkles,
   Stethoscope,
+  Sun,
   Workflow,
 } from "lucide-react";
 
@@ -211,7 +214,7 @@ const contactCards = [
 ];
 
 const fadeUp = {
-  initial: { opacity: 0, y: 36 },
+  initial: false,
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, amount: 0.25 },
   transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
@@ -226,7 +229,7 @@ function formatCount(value: number, decimals = 0) {
 
 function SectionLabel({ children }: { children: string }) {
   return (
-    <p className="inline-flex items-center gap-3 text-[0.72rem] font-semibold uppercase tracking-[0.34em] text-[#79a7c9]">
+    <p className="inline-flex items-center gap-3 text-[0.72rem] font-semibold uppercase tracking-[0.34em] text-slate-600 dark:text-[#79a7c9]">
       <span className="h-2 w-2 rounded-full bg-[hsl(var(--primary))]" />
       {children}
     </p>
@@ -328,6 +331,7 @@ function AnimatedHeroText() {
 }
 
 export default function Home() {
+  const { theme, setTheme } = useTheme();
   const pageRef = useRef<HTMLElement>(null);
   const [term, setTerm] = useState("NPHIES");
   const [explanation, setExplanation] = useState<string | null>(null);
@@ -557,19 +561,8 @@ export default function Home() {
         });
       });
 
-      gsap.utils.toArray<HTMLElement>(".reveal-panel").forEach((panel, index) => {
-        gsap.from(panel, {
-          y: 42,
-          opacity: 0,
-          duration: 0.9,
-          delay: index * 0.06,
-          ease: "expo.out",
-          scrollTrigger: {
-            trigger: panel,
-            start: "top 82%",
-          },
-        });
-      });
+      // Ensure all ScrollTriggers recalculate after layout and smooth-scroll transforms settle.
+      requestAnimationFrame(() => ScrollTrigger.refresh());
     }, pageRef);
 
     return () => ctx.revert();
@@ -604,54 +597,65 @@ export default function Home() {
     <main
       ref={pageRef}
       style={dashboardTheme}
-      className="relative min-h-screen overflow-hidden bg-[#04101a] text-[#ecf7ff]"
+      className="relative min-h-screen overflow-hidden bg-slate-50 dark:bg-[#04101a] text-slate-700 dark:text-[#d3e7f5]"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(74,185,255,0.22),transparent_30%),radial-gradient(circle_at_82%_10%,rgba(45,211,191,0.18),transparent_26%),linear-gradient(180deg,#06131f_0%,#071a27_45%,#04101a_100%)]" />
-      <div className="absolute inset-0 opacity-45 [background-image:linear-gradient(rgba(127,177,214,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(127,177,214,0.08)_1px,transparent_1px)] [background-size:76px_76px] [mask-image:radial-gradient(circle_at_top,black,transparent_82%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,16,26,0.05)_0%,rgba(4,16,26,0)_18%,rgba(4,16,26,0.24)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(74,185,255,0.2),transparent_32%),radial-gradient(circle_at_82%_10%,rgba(45,211,191,0.14),transparent_28%),linear-gradient(180deg,#f7fcff_0%,#ecf8ff_46%,#e1f2fb_100%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(74,185,255,0.22),transparent_30%),radial-gradient(circle_at_82%_10%,rgba(45,211,191,0.18),transparent_26%),linear-gradient(180deg,#06131f_0%,#071a27_45%,#04101a_100%)]" />
+      <div className="absolute inset-0 opacity-35 dark:opacity-45 [background-image:linear-gradient(rgba(100,164,199,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(100,164,199,0.12)_1px,transparent_1px)] dark:[background-image:linear-gradient(rgba(127,177,214,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(127,177,214,0.08)_1px,transparent_1px)] [background-size:76px_76px] [mask-image:radial-gradient(circle_at_top,black,transparent_82%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(220,241,252,0.42)_0%,rgba(220,241,252,0)_20%,rgba(188,224,242,0.36)_100%)] dark:bg-[linear-gradient(180deg,rgba(4,16,26,0.05)_0%,rgba(4,16,26,0)_18%,rgba(4,16,26,0.24)_100%)]" />
 
       <div className="fixed inset-x-0 top-4 z-40 px-4 md:px-6">
-        <div className="nav-shell mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/10 bg-[rgba(5,18,29,0.74)] px-4 py-3 shadow-[0_22px_70px_rgba(0,0,0,0.32)] backdrop-blur-xl md:px-6">
+        <div className="nav-shell mx-auto flex max-w-7xl items-center justify-between rounded-full border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[rgba(5,18,29,0.74)] px-4 py-3 shadow-[0_22px_60px_rgba(7,83,116,0.18)] dark:shadow-[0_22px_70px_rgba(0,0,0,0.32)] backdrop-blur-xl md:px-6">
           <a href="#top" className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[hsl(var(--primary))]/18 text-[hsl(var(--primary))] shadow-[0_0_32px_rgba(78,203,255,0.22)]">
               <Sparkles className="h-4 w-4" />
             </div>
             <div>
-              <p className="font-headline text-sm font-semibold uppercase tracking-[0.22em] text-white">
+              <p className="font-headline text-sm font-semibold uppercase tracking-[0.22em] text-slate-900 dark:text-white">
                 SuperGIT
               </p>
-              <p className="text-[0.64rem] uppercase tracking-[0.3em] text-[#81a8c5]">
+              <p className="text-[0.64rem] uppercase tracking-[0.3em] text-slate-600 dark:text-[#81a8c5]">
                 Healthcare Solutions
               </p>
             </div>
           </a>
 
-          <nav className="hidden items-center gap-7 text-sm font-medium text-[#a8bfd1] lg:flex">
-            <a href="#overview" className="transition-colors hover:text-white">
+          <nav className="hidden items-center gap-7 text-sm font-medium text-slate-600 dark:text-[#a8bfd1] lg:flex">
+            <a href="#overview" className="transition-colors hover:text-slate-900 dark:text-white">
               Overview
             </a>
-            <a href="#systems" className="transition-colors hover:text-white">
+            <a href="#systems" className="transition-colors hover:text-slate-900 dark:text-white">
               Systems
             </a>
-            <a href="#consultation" className="transition-colors hover:text-white">
+            <a href="#consultation" className="transition-colors hover:text-slate-900 dark:text-white">
               Consultation
             </a>
-            <a href="#explainer" className="transition-colors hover:text-white">
+            <a href="#explainer" className="transition-colors hover:text-slate-900 dark:text-white">
               Explainer
             </a>
-            <a href="#contact" className="transition-colors hover:text-white">
+            <a href="#contact" className="transition-colors hover:text-slate-900 dark:text-white">
               Contact
             </a>
           </nav>
 
-          <a
-            href="#consultation"
-            data-magnetic
-            className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/14 px-4 py-2 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
-          >
-            Book a walkthrough
-            <ArrowUpRight className="h-4 w-4 text-[hsl(var(--primary))]" />
-          </a>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] transition-transform hover:-translate-y-0.5"
+              aria-label="Toggle theme"
+            >
+              <Sun className="h-4 w-4 hidden dark:block" />
+              <Moon className="h-4 w-4 block dark:hidden" />
+            </button>
+
+            <a
+              href="#consultation"
+              data-magnetic
+              className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/14 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-white transition-transform hover:-translate-y-0.5"
+            >
+              Book a walkthrough
+              <ArrowUpRight className="h-4 w-4 text-[hsl(var(--primary))]" />
+            </a>
+          </div>
         </div>
       </div>
 
@@ -665,11 +669,11 @@ export default function Home() {
           <div className="hero-copy relative z-10 space-y-6 pl-0 md:pl-4 lg:pl-0">
             <SectionLabel>Healthcare technology reimagined</SectionLabel>
 
-            <h1 className="max-w-4xl font-headline text-[clamp(2.4rem,6vw,5.5rem)] font-semibold uppercase leading-[0.88] tracking-[-0.05em] text-white">
+            <h1 className="max-w-4xl font-headline text-[clamp(2.4rem,6vw,5.5rem)] font-semibold uppercase leading-[0.88] tracking-[-0.05em] text-slate-900 dark:text-white">
               <AnimatedHeroText />
             </h1>
 
-            <p className="max-w-2xl text-lg leading-8 text-[#9bb4c7] md:text-xl">
+            <p className="max-w-2xl text-lg leading-8 text-slate-600 dark:text-[#9bb4c7] md:text-xl">
               SuperGIT delivers cutting-edge healthcare technology solutions for
               Saudi Arabia. From HIS and ERP to NPHIES integration and AI-powered
               CDSS, we digitalize hospital operations to improve efficiency and
@@ -685,7 +689,7 @@ export default function Home() {
               ].map((item) => (
                 <div
                   key={item}
-                  className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[#c2d8e7]"
+                  className="rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 px-4 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-slate-600 dark:text-[#c2d8e7]"
                 >
                   {item}
                 </div>
@@ -696,7 +700,7 @@ export default function Home() {
               <a
                 href="#systems"
                 data-magnetic
-                className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#04101a] transition-transform duration-300 hover:-translate-y-1"
+                className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-slate-600 dark:text-[#04101a] transition-transform duration-300 hover:-translate-y-1"
               >
                 Explore services
                 <ArrowRight className="h-4 w-4" />
@@ -704,7 +708,7 @@ export default function Home() {
               <a
                 href="#explainer"
                 data-magnetic
-                className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/6 px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white transition-transform duration-300 hover:-translate-y-1"
+                className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/6 px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-slate-900 dark:text-white transition-transform duration-300 hover:-translate-y-1"
               >
                 Try term decoder
                 <ArrowUpRight className="h-4 w-4 text-[hsl(var(--primary))]" />
@@ -728,12 +732,12 @@ export default function Home() {
               ].map((item) => (
                 <div
                   key={item.title}
-                  className="rounded-[1.5rem] border border-white/10 bg-[rgba(8,23,35,0.74)] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.22)] backdrop-blur"
+                  className="rounded-[1.5rem] border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[rgba(8,23,35,0.74)] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.22)] backdrop-blur"
                 >
                   <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[hsl(var(--primary))]">
                     {item.title}
                   </p>
-                  <p className="mt-3 text-sm leading-7 text-[#8ea6bb]">
+                  <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-[#8ea6bb]">
                     {item.body}
                   </p>
                 </div>
@@ -742,7 +746,7 @@ export default function Home() {
           </div>
 
           <div className="relative min-h-[32rem] lg:min-h-[42rem]">
-            <div className="hero-screen relative overflow-hidden rounded-[2.2rem] border border-white/10 bg-[rgba(7,23,35,0.9)] p-6 shadow-[0_45px_120px_rgba(0,0,0,0.34)] md:p-7">
+            <div className="hero-screen relative overflow-hidden rounded-[2.2rem] border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[rgba(7,23,35,0.9)] p-6 shadow-[0_45px_120px_rgba(0,0,0,0.34)] md:p-7">
               <div className="hero-grid-backdrop absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(100,221,255,0.14),transparent_38%),linear-gradient(180deg,rgba(255,255,255,0.04)_0%,rgba(255,255,255,0)_100%)]" />
               <div className="scan-sweep absolute inset-y-0 left-[-18%] w-[36%] bg-[linear-gradient(90deg,transparent,rgba(104,223,255,0.18),transparent)] blur-2xl" />
 
@@ -752,24 +756,24 @@ export default function Home() {
                     <p className="text-[0.7rem] font-semibold uppercase tracking-[0.32em] text-[hsl(var(--primary))]">
                       SuperGIT command center
                     </p>
-                    <p className="mt-3 font-headline text-3xl font-semibold uppercase leading-none text-white md:text-4xl">
+                    <p className="mt-3 font-headline text-3xl font-semibold uppercase leading-none text-slate-900 dark:text-white md:text-4xl">
                       Healthcare operations platform
                     </p>
                   </div>
-                  <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#b7d0e0]">
+                  <div className="flex items-center gap-3 rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-slate-600 dark:text-[#b7d0e0]">
                     <span className="h-2 w-2 rounded-full bg-[#4ade80]" />
                     Syncing live
                   </div>
                 </div>
 
                 <div className="mt-6 grid gap-4 xl:grid-cols-[1.08fr_0.92fr]">
-                  <div className="rounded-[1.8rem] border border-white/10 bg-[rgba(5,18,29,0.78)] p-5">
+                  <div className="rounded-[1.8rem] border border-slate-200 dark:border-white/10 bg-slate-100/90 dark:bg-[rgba(5,18,29,0.78)] p-5">
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <p className="text-[0.68rem] uppercase tracking-[0.28em] text-[#87b8d8]">
+                        <p className="text-[0.68rem] uppercase tracking-[0.28em] text-slate-600 dark:text-[#87b8d8]">
                           HIS coverage
                         </p>
-                        <p className="mt-3 text-3xl font-semibold text-white">
+                        <p className="mt-3 text-3xl font-semibold text-slate-900 dark:text-white">
                           98% claim accuracy
                         </p>
                       </div>
@@ -782,7 +786,7 @@ export default function Home() {
                       {heroPulseHeights.map((height, index) => (
                         <div
                           key={`${height}-${index}`}
-                          className="relative h-8 overflow-hidden rounded-full bg-white/5"
+                          className="relative h-8 overflow-hidden rounded-full bg-slate-100 dark:bg-white/5"
                         >
                           <div
                             className="pulse-bar absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#34d399] via-[hsl(var(--primary))] to-[#9be7ff]"
@@ -812,15 +816,15 @@ export default function Home() {
                       ].map((item) => (
                         <div
                           key={item.label}
-                          className="rounded-[1.4rem] border border-white/10 bg-white/[0.04] p-4 overflow-hidden"
+                          className="rounded-[1.4rem] border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-4 overflow-hidden"
                         >
-                          <p className="text-[0.68rem] uppercase tracking-[0.24em] text-[#8cb1cb] truncate">
+                          <p className="text-[0.68rem] uppercase tracking-[0.24em] text-slate-600 dark:text-[#8cb1cb] truncate">
                             {item.label}
                           </p>
-                          <p className="mt-3 text-xl font-semibold text-white truncate">
+                          <p className="mt-3 text-xl font-semibold text-slate-900 dark:text-white truncate">
                             {item.value}
                           </p>
-                          <p className="mt-3 text-xs leading-6 text-[#7d9ab1] line-clamp-3">
+                          <p className="mt-3 text-xs leading-6 text-slate-600 dark:text-[#7d9ab1] line-clamp-3">
                             {item.tone}
                           </p>
                         </div>
@@ -854,22 +858,22 @@ export default function Home() {
                       return (
                         <div
                           key={item.title}
-                          className="rounded-[1.55rem] border border-white/10 bg-[rgba(5,18,29,0.84)] p-5"
+                          className="rounded-[1.55rem] border border-slate-200 dark:border-white/10 bg-white dark:bg-[rgba(5,18,29,0.84)] p-5"
                         >
                           <div className="flex items-start justify-between gap-4">
                             <div>
-                              <p className="text-[0.68rem] uppercase tracking-[0.28em] text-[#8eb4cf]">
+                              <p className="text-[0.68rem] uppercase tracking-[0.28em] text-slate-600 dark:text-[#8eb4cf]">
                                 {item.title}
                               </p>
-                              <p className="mt-3 text-2xl font-semibold text-white">
+                              <p className="mt-3 text-2xl font-semibold text-slate-900 dark:text-white">
                                 {item.value}
                               </p>
                             </div>
-                            <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-[hsl(var(--primary))]">
+                            <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 p-3 text-[hsl(var(--primary))]">
                               <Icon className="h-5 w-5" />
                             </div>
                           </div>
-                          <p className="mt-4 text-sm leading-7 text-[#88a4b8]">
+                          <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-[#88a4b8]">
                             {item.body}
                           </p>
                         </div>
@@ -886,13 +890,13 @@ export default function Home() {
                 data-float-card
                 whileHover={{ y: -6, scale: 1.02 }}
                 transition={{ duration: 0.35, ease: "easeOut" }}
-                className={`hero-float-card absolute z-20 border border-white/10 bg-[rgba(8,23,35,0.86)] p-4 shadow-[0_22px_70px_rgba(0,0,0,0.28)] backdrop-blur ${card.position}`}
+                className={`hero-float-card absolute z-20 border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[rgba(8,23,35,0.86)] p-4 shadow-[0_22px_70px_rgba(0,0,0,0.28)] backdrop-blur ${card.position}`}
               >
                 <p className="text-[0.66rem] uppercase tracking-[0.28em] text-[hsl(var(--primary))]">
                   {card.title}
                 </p>
-                <p className="mt-3 text-xl font-semibold text-white">{card.value}</p>
-                <p className="mt-3 text-xs leading-6 text-[#86a5be]">{card.body}</p>
+                <p className="mt-3 text-xl font-semibold text-slate-900 dark:text-white">{card.value}</p>
+                <p className="mt-3 text-xs leading-6 text-slate-600 dark:text-[#86a5be]">{card.body}</p>
               </motion.div>
             ))}
           </div>
@@ -900,7 +904,7 @@ export default function Home() {
       </section>
 
       <section className="relative px-4 pb-8 md:px-8 lg:px-12 xl:px-16">
-        <div className="mx-auto max-w-7xl rounded-[2rem] border border-white/10 bg-[rgba(7,23,35,0.74)] p-5 shadow-[0_30px_100px_rgba(0,0,0,0.24)] backdrop-blur md:p-6">
+        <div className="mx-auto max-w-7xl rounded-[2rem] border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[rgba(7,23,35,0.74)] p-5 shadow-[0_30px_100px_rgba(0,0,0,0.24)] backdrop-blur md:p-6">
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {commandMetrics.map((metric, index) => (
               <motion.div
@@ -911,19 +915,19 @@ export default function Home() {
                   delay: index * 0.05,
                 }}
                 whileHover={{ y: -6, scale: 1.01 }}
-                className="reveal-panel rounded-[1.55rem] border border-white/10 bg-white/[0.04] p-5"
+                className="reveal-panel rounded-[1.55rem] border border-slate-200 dark:border-white/10 bg-white/[0.04] p-5"
               >
-                <p className="text-[0.68rem] uppercase tracking-[0.28em] text-[#8ab4d0]">
+                <p className="text-[0.68rem] uppercase tracking-[0.28em] text-slate-600 dark:text-[#8ab4d0]">
                   {metric.label}
                 </p>
-                <p className="mt-3 font-headline text-4xl font-semibold uppercase tracking-[-0.03em] text-white">
+                <p className="mt-3 font-headline text-4xl font-semibold uppercase tracking-[-0.03em] text-slate-900 dark:text-white">
                   <CountUp
                     value={metric.value}
                     suffix={metric.suffix}
                     decimals={metric.decimals}
                   />
                 </p>
-                <p className="mt-4 text-sm leading-7 text-[#88a2b7]">{metric.note}</p>
+                <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-[#88a2b7]">{metric.note}</p>
               </motion.div>
             ))}
           </div>
@@ -931,13 +935,13 @@ export default function Home() {
       </section>
 
       <section className="relative py-10">
-        <div className="space-y-4 border-y border-white/10 bg-white/[0.02] py-5">
+        <div className="space-y-4 border-y border-slate-200 dark:border-white/10 bg-white/[0.02] py-5">
           <div className="overflow-hidden">
             <div className="loop-track flex w-max" data-direction="forward">
               {doubledSignals.map((item, index) => (
                 <span
                   key={`${item}-forward-${index}`}
-                  className="mx-4 rounded-full border border-white/10 bg-[rgba(9,28,42,0.8)] px-5 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-[#d7ebf7]"
+                  className="mx-4 rounded-full border border-slate-200 dark:border-white/10 bg-white dark:bg-[rgba(9,28,42,0.8)] px-5 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-slate-700 dark:text-[#d7ebf7]"
                 >
                   {item}
                 </span>
@@ -963,10 +967,10 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <motion.div {...fadeUp} className="max-w-3xl space-y-6">
             <SectionLabel>Our services</SectionLabel>
-            <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-white md:text-6xl">
+            <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-slate-900 dark:text-white md:text-6xl">
               Comprehensive healthcare solutions built for Saudi Arabia.
             </h2>
-            <p className="text-lg leading-8 text-[#97b0c3] md:text-xl">
+            <p className="text-lg leading-8 text-slate-600 dark:text-[#97b0c3] md:text-xl">
               From HIS and ERP to NPHIES integration and AI-powered clinical decision
               support, every module is designed to improve efficiency and enhance
               patient care across your facility.
@@ -986,7 +990,7 @@ export default function Home() {
                     delay: index * 0.07,
                   }}
                   whileHover={{ y: -8, scale: 1.01 }}
-                  className="reveal-panel relative overflow-hidden rounded-[2rem] border border-white/10 bg-[rgba(7,23,35,0.82)] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.24)]"
+                  className="reveal-panel relative overflow-hidden rounded-[2rem] border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[rgba(7,23,35,0.82)] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.24)]"
                 >
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(92,226,255,0.08),transparent_35%)]" />
                   <div className="relative">
@@ -995,7 +999,7 @@ export default function Home() {
                         <p className="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-[hsl(var(--primary))]">
                           {card.eyebrow}
                         </p>
-                        <h3 className="max-w-xl font-headline text-3xl font-semibold uppercase leading-[0.96] tracking-[-0.04em] text-white">
+                        <h3 className="max-w-xl font-headline text-3xl font-semibold uppercase leading-[0.96] tracking-[-0.04em] text-slate-900 dark:text-white">
                           {card.title}
                         </h3>
                       </div>
@@ -1004,16 +1008,16 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <p className="mt-5 text-base leading-8 text-[#8ca7bc]">
+                    <p className="mt-5 text-base leading-8 text-slate-600 dark:text-[#8ca7bc]">
                       {card.body}
                     </p>
 
                     <div className="mt-6 grid gap-5 sm:grid-cols-[0.9fr_1.1fr] sm:items-end">
-                      <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5">
-                        <p className="text-[0.66rem] uppercase tracking-[0.26em] text-[#88afcb]">
+                      <div className="rounded-[1.5rem] border border-slate-200 dark:border-white/10 bg-white/[0.04] p-5">
+                        <p className="text-[0.66rem] uppercase tracking-[0.26em] text-slate-600 dark:text-[#88afcb]">
                           {card.statLabel}
                         </p>
-                        <p className="mt-3 font-headline text-4xl font-semibold uppercase text-white">
+                        <p className="mt-3 font-headline text-4xl font-semibold uppercase text-slate-900 dark:text-white">
                           <CountUp
                             value={card.statValue}
                             suffix={card.statSuffix}
@@ -1024,16 +1028,16 @@ export default function Home() {
 
                       <div className="space-y-4">
                         {card.tracks.map((track) => (
-                          <div key={track} className="rounded-[1.3rem] border border-white/10 bg-[#081c2c] p-4">
+                          <div key={track} className="rounded-[1.3rem] border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#081c2c] p-4">
                             <div className="flex items-center justify-between gap-3">
-                              <span className="text-sm font-medium text-[#d5e8f4]">
+                              <span className="text-sm font-medium text-slate-600 dark:text-[#d5e8f4]">
                                 {track}
                               </span>
                               <span className="text-[0.66rem] uppercase tracking-[0.24em] text-[hsl(var(--primary))]">
                                 Live
                               </span>
                             </div>
-                            <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/8">
+                            <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-white/8">
                               <div className="metric-bar-fill h-full rounded-full bg-gradient-to-r from-[hsl(var(--primary))] via-[#2dd4bf] to-[#9be7ff]" />
                             </div>
                           </div>
@@ -1052,10 +1056,10 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl gap-8 xl:grid-cols-[0.86fr_1.14fr]">
           <motion.div {...fadeUp} className="space-y-7">
             <SectionLabel>About SuperGIT</SectionLabel>
-            <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-white md:text-6xl">
+            <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-slate-900 dark:text-white md:text-6xl">
               Transforming healthcare in Saudi Arabia with Vision 2030.
             </h2>
-            <p className="text-lg leading-8 text-[#97b0c3] md:text-xl">
+            <p className="text-lg leading-8 text-slate-600 dark:text-[#97b0c3] md:text-xl">
               At SuperGIT, we deliver cutting-edge technology solutions to digitalize
               healthcare operations, improve efficiency, and enhance patient care —
               particularly for acute and critical care in hospital settings.
@@ -1070,7 +1074,7 @@ export default function Home() {
               ].map((item) => (
                 <div
                   key={item}
-                  className="rounded-[1.4rem] border border-white/10 bg-[rgba(7,23,35,0.7)] px-5 py-4 text-sm leading-7 text-[#cfe4f1]"
+                  className="rounded-[1.4rem] border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[rgba(7,23,35,0.7)] px-5 py-4 text-sm leading-7 text-slate-600 dark:text-[#cfe4f1]"
                 >
                   {item}
                 </div>
@@ -1080,7 +1084,7 @@ export default function Home() {
 
           <motion.div
             {...fadeUp}
-            className="reveal-panel relative overflow-hidden rounded-[2.2rem] border border-white/10 bg-[rgba(7,23,35,0.84)] p-6 shadow-[0_36px_110px_rgba(0,0,0,0.28)]"
+            className="reveal-panel relative overflow-hidden rounded-[2.2rem] border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[rgba(7,23,35,0.84)] p-6 shadow-[0_36px_110px_rgba(0,0,0,0.28)]"
           >
             <div className="scan-sweep absolute inset-y-0 left-[-20%] w-[34%] bg-[linear-gradient(90deg,transparent,rgba(103,223,255,0.14),transparent)] blur-2xl" />
             <div className="orbit-ring absolute -right-10 -top-10 h-40 w-40 rounded-full border border-[hsl(var(--primary))]/18">
@@ -1093,18 +1097,18 @@ export default function Home() {
                   key={row.title}
                   whileHover={{ y: -6, scale: 1.01 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="rounded-[1.7rem] border border-white/10 bg-[#081b2a] p-5"
+                  className="rounded-[1.7rem] border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-[#081b2a] p-5"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-[0.68rem] uppercase tracking-[0.28em] text-[hsl(var(--primary))]">
                         {row.title}
                       </p>
-                      <p className="mt-3 text-xl font-semibold text-white">
+                      <p className="mt-3 text-xl font-semibold text-slate-900 dark:text-white">
                         {row.detail}
                       </p>
                     </div>
-                    <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-[0.64rem] uppercase tracking-[0.22em] text-[#b9d3e4]">
+                    <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 px-3 py-2 text-[0.64rem] uppercase tracking-[0.22em] text-slate-600 dark:text-[#b9d3e4]">
                       Active
                     </div>
                   </div>
@@ -1113,7 +1117,7 @@ export default function Home() {
                     {row.bullets.map((bullet) => (
                       <div
                         key={bullet}
-                        className="rounded-[1.2rem] border border-white/8 bg-white/[0.03] px-4 py-3 text-sm leading-7 text-[#8ea7ba]"
+                        className="rounded-[1.2rem] border border-slate-200 dark:border-white/8 bg-white dark:bg-white/[0.03] px-4 py-3 text-sm leading-7 text-slate-700 dark:text-[#8ea7ba]"
                       >
                         {bullet}
                       </div>
@@ -1130,10 +1134,10 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl gap-8 xl:grid-cols-[0.82fr_1.18fr] xl:items-start">
           <motion.div {...fadeUp} className="space-y-7">
             <SectionLabel>Healthcare term decoder</SectionLabel>
-            <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-white md:text-6xl">
+            <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-slate-900 dark:text-white md:text-6xl">
               Understand healthcare technology terms instantly.
             </h2>
-            <p className="text-lg leading-8 text-[#97b0c3] md:text-xl">
+            <p className="text-lg leading-8 text-slate-600 dark:text-[#97b0c3] md:text-xl">
               Get plain-language explanations for clinical, operational, and claims
               terms. Built for teams working across hospital operations and insurance
               workflows in Saudi Arabia.
@@ -1148,8 +1152,8 @@ export default function Home() {
                   onClick={() => setTerm(item)}
                   className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] transition-colors ${
                     term === item
-                      ? "border-[hsl(var(--primary))] bg-[hsl(var(--primary))]/14 text-white"
-                      : "border-white/10 bg-white/5 text-[#cde0ed] hover:border-[hsl(var(--primary))]/40"
+                      ? "border-[hsl(var(--primary))] bg-[hsl(var(--primary))]/14 text-slate-900 dark:text-white"
+                      : "border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-[#cde0ed] hover:border-[hsl(var(--primary))]/40"
                   }`}
                 >
                   {item}
@@ -1157,24 +1161,24 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="rounded-[1.8rem] border border-white/10 bg-[rgba(7,23,35,0.72)] p-6">
+            <div className="rounded-[1.8rem] border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[rgba(7,23,35,0.72)] p-6">
               <p className="text-[0.68rem] uppercase tracking-[0.28em] text-[hsl(var(--primary))]">
                 Knowledge base
               </p>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-[1.3rem] border border-white/10 bg-white/[0.04] p-4">
-                  <p className="text-[0.66rem] uppercase tracking-[0.24em] text-[#8cb3cf]">
+                <div className="rounded-[1.3rem] border border-slate-200 dark:border-white/10 bg-white/[0.04] p-4">
+                  <p className="text-[0.66rem] uppercase tracking-[0.24em] text-slate-600 dark:text-[#8cb3cf]">
                     Healthcare terms
                   </p>
-                  <p className="mt-3 text-2xl font-semibold text-white">
+                  <p className="mt-3 text-2xl font-semibold text-slate-900 dark:text-white">
                     <CountUp value={420} suffix="+" />
                   </p>
                 </div>
-                <div className="rounded-[1.3rem] border border-white/10 bg-white/[0.04] p-4">
-                  <p className="text-[0.66rem] uppercase tracking-[0.24em] text-[#8cb3cf]">
+                <div className="rounded-[1.3rem] border border-slate-200 dark:border-white/10 bg-white/[0.04] p-4">
+                  <p className="text-[0.66rem] uppercase tracking-[0.24em] text-slate-600 dark:text-[#8cb3cf]">
                     Response accuracy
                   </p>
-                  <p className="mt-3 text-2xl font-semibold text-white">
+                  <p className="mt-3 text-2xl font-semibold text-slate-900 dark:text-white">
                     <CountUp value={96} suffix="%" />
                   </p>
                 </div>
@@ -1184,7 +1188,7 @@ export default function Home() {
 
           <motion.div
             {...fadeUp}
-            className="reveal-panel rounded-[2.2rem] border border-white/10 bg-[rgba(7,23,35,0.84)] p-6 shadow-[0_34px_100px_rgba(0,0,0,0.28)] backdrop-blur sm:p-8"
+            className="reveal-panel rounded-[2.2rem] border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[rgba(7,23,35,0.84)] p-6 shadow-[0_34px_100px_rgba(0,0,0,0.28)] backdrop-blur sm:p-8"
           >
             <form onSubmit={handleExplain} className="space-y-6">
               <div className="flex flex-wrap items-center justify-between gap-4">
@@ -1192,17 +1196,17 @@ export default function Home() {
                   <p className="text-[0.68rem] uppercase tracking-[0.3em] text-[hsl(var(--primary))]">
                     Healthcare term decoder
                   </p>
-                  <p className="mt-3 font-headline text-3xl font-semibold uppercase leading-none text-white">
+                  <p className="mt-3 font-headline text-3xl font-semibold uppercase leading-none text-slate-900 dark:text-white">
                     Get instant explanations
                   </p>
                 </div>
-                <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[0.68rem] uppercase tracking-[0.24em] text-[#b8d2e2]">
+                <div className="rounded-full border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 px-4 py-2 text-[0.68rem] uppercase tracking-[0.24em] text-slate-600 dark:text-[#b8d2e2]">
                   Live AI assist
                 </div>
               </div>
 
               <label className="block">
-                <span className="mb-3 block text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-[#8cb2cd]">
+                <span className="mb-3 block text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-slate-600 dark:text-[#8cb2cd]">
                   Healthcare term
                 </span>
                 <input
@@ -1210,12 +1214,12 @@ export default function Home() {
                   value={term}
                   onChange={(event) => setTerm(event.target.value)}
                   placeholder="Type NPHIES, HIS, CDSS, ERP, CCHI, or EMR"
-                  className="w-full rounded-[1.5rem] border border-white/10 bg-[#081b2a] px-5 py-4 text-base text-white outline-none transition-colors placeholder:text-[#63829d] focus:border-[hsl(var(--primary))] focus:shadow-[0_0_0_1px_hsl(var(--primary))]"
+                  className="w-full rounded-[1.5rem] border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-[#081b2a] px-5 py-4 text-base text-slate-900 dark:text-white outline-none transition-colors placeholder:text-slate-500 dark:placeholder:text-[#63829d] focus:border-[hsl(var(--primary))] focus:shadow-[0_0_0_1px_hsl(var(--primary))]"
                 />
               </label>
 
-              <div className="flex flex-wrap items-center justify-between gap-4 rounded-[1.6rem] border border-white/10 bg-white/[0.04] px-4 py-4">
-                <div className="text-sm leading-7 text-[#9bb5c8]">
+              <div className="flex flex-wrap items-center justify-between gap-4 rounded-[1.6rem] border border-slate-200 dark:border-white/10 bg-white/[0.04] px-4 py-4">
+                <div className="text-sm leading-7 text-slate-600 dark:text-[#9bb5c8]">
                   Plain-language answers for teams working across clinical,
                   operational, and insurance workflows in Saudi Arabia.
                 </div>
@@ -1223,7 +1227,7 @@ export default function Home() {
                   type="submit"
                   data-magnetic
                   disabled={isPending}
-                  className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#04101a] transition-transform hover:-translate-y-0.5 disabled:opacity-70"
+                  className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-600 dark:text-[#04101a] transition-transform hover:-translate-y-0.5 disabled:opacity-70"
                 >
                   {isPending ? "Explaining..." : "Explain term"}
                   <ArrowRight className="h-4 w-4" />
@@ -1235,7 +1239,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mt-6 rounded-[1.5rem] border border-[#fb7185]/20 bg-[#4c1020]/40 p-5 text-sm leading-7 text-[#fecdd3]"
+                className="mt-6 rounded-[1.5rem] border border-[#fb7185]/20 bg-[#4c1020]/40 p-5 text-sm leading-7 text-slate-600 dark:text-[#fecdd3]"
               >
                 {error}
               </motion.div>
@@ -1245,7 +1249,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mt-6 rounded-[1.8rem] border border-[hsl(var(--primary))]/18 bg-[#081b2a] p-6"
+                className="mt-6 rounded-[1.8rem] border border-[hsl(var(--primary))]/18 bg-slate-100 dark:bg-[#081b2a] p-6"
               >
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="h-5 w-5 text-[hsl(var(--primary))]" />
@@ -1253,12 +1257,12 @@ export default function Home() {
                     Healthcare explanation
                   </p>
                 </div>
-                <p className="mt-4 text-base leading-8 text-[#d7ebf7]">
+                <p className="mt-4 text-base leading-8 text-slate-600 dark:text-[#d7ebf7]">
                   {explanation}
                 </p>
               </motion.div>
             ) : (
-              <div className="mt-6 rounded-[1.8rem] border border-dashed border-white/10 p-6 text-sm leading-7 text-[#809ab0]">
+              <div className="mt-6 rounded-[1.8rem] border border-dashed border-slate-200 dark:border-white/10 p-6 text-sm leading-7 text-slate-600 dark:text-[#809ab0]">
                 Ask for a healthcare term and get a plain-language explanation instantly.
                 
               </div>
@@ -1268,14 +1272,14 @@ export default function Home() {
       </section>
 
       <section id="consultation" className="relative px-4 py-24 md:px-8 lg:px-12 xl:px-16">
-        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.4rem] border border-white/10 bg-[linear-gradient(135deg,rgba(7,23,35,0.94)_0%,rgba(9,29,43,0.9)_50%,rgba(11,48,64,0.9)_100%)] p-8 shadow-[0_38px_120px_rgba(0,0,0,0.3)] md:p-10">
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.4rem] border border-slate-200 dark:border-white/10 bg-[linear-gradient(135deg,rgba(239,251,255,0.96)_0%,rgba(224,245,255,0.95)_50%,rgba(210,239,252,0.94)_100%)] dark:bg-[linear-gradient(135deg,rgba(7,23,35,0.94)_0%,rgba(9,29,43,0.9)_50%,rgba(11,48,64,0.9)_100%)] p-8 shadow-[0_28px_90px_rgba(7,83,116,0.16)] dark:shadow-[0_38px_120px_rgba(0,0,0,0.3)] md:p-10">
           <div className="grid gap-10 xl:grid-cols-[0.95fr_1.05fr] xl:items-center">
             <motion.div {...fadeUp} className="space-y-7">
               <SectionLabel>Get started</SectionLabel>
-              <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-white md:text-6xl">
+              <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-slate-900 dark:text-white md:text-6xl">
                 Experience healthcare reimagined with SuperGIT.
               </h2>
-              <p className="text-lg leading-8 text-[#a2bdd0] md:text-xl">
+              <p className="text-lg leading-8 text-slate-600 dark:text-[#a2bdd0] md:text-xl">
                 Let us show you how HIS, ERP, NPHIES Connect, and CDSS work together
                 to transform your facility's operations and improve patient care.
               </p>
@@ -1288,7 +1292,7 @@ export default function Home() {
                 ].map((item) => (
                   <div
                     key={item}
-                    className="rounded-[1.4rem] border border-white/10 bg-white/[0.05] px-5 py-4 text-sm leading-7 text-[#d9edf8]"
+                    className="rounded-[1.4rem] border border-slate-200 dark:border-white/10 bg-white/[0.05] px-5 py-4 text-sm leading-7 text-slate-600 dark:text-[#d9edf8]"
                   >
                     {item}
                   </div>
@@ -1299,7 +1303,7 @@ export default function Home() {
                 <a
                   href="#contact"
                   data-magnetic
-                  className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#04101a] transition-transform hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-slate-600 dark:text-[#04101a] transition-transform hover:-translate-y-0.5"
                 >
                   Start the conversation
                   <ArrowRight className="h-4 w-4" />
@@ -1307,7 +1311,7 @@ export default function Home() {
                 <a
                   href="#overview"
                   data-magnetic
-                  className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white transition-transform hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-slate-100 dark:bg-white/5 px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-slate-900 dark:text-white transition-transform hover:-translate-y-0.5"
                 >
                   Explore our services
                   <ArrowUpRight className="h-4 w-4 text-[hsl(var(--primary))]" />
@@ -1349,15 +1353,15 @@ export default function Home() {
                       delay: index * 0.06,
                     }}
                     whileHover={{ y: -6, scale: 1.01 }}
-                    className="rounded-[1.7rem] border border-white/10 bg-[rgba(5,18,29,0.84)] p-5"
+                    className="rounded-[1.7rem] border border-slate-200 dark:border-white/10 bg-white dark:bg-[rgba(5,18,29,0.84)] p-5"
                   >
                     <div className="rounded-[1.2rem] border border-[hsl(var(--primary))]/18 bg-[hsl(var(--primary))]/10 p-3 text-[hsl(var(--primary))]">
                       <Icon className="h-5 w-5" />
                     </div>
-                    <p className="mt-4 font-headline text-2xl font-semibold uppercase tracking-[-0.03em] text-white">
+                    <p className="mt-4 font-headline text-2xl font-semibold uppercase tracking-[-0.03em] text-slate-900 dark:text-white">
                       {item.title}
                     </p>
-                    <p className="mt-3 text-sm leading-7 text-[#94aec2]">
+                    <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-[#94aec2]">
                       {item.body}
                     </p>
                   </motion.div>
@@ -1369,14 +1373,14 @@ export default function Home() {
       </section>
 
       <section id="contact" className="relative px-4 pb-14 pt-8 md:px-8 lg:px-12 xl:px-16">
-        <div className="mx-auto max-w-7xl rounded-[2.3rem] border border-white/10 bg-[rgba(7,23,35,0.78)] p-8 shadow-[0_32px_100px_rgba(0,0,0,0.24)] backdrop-blur md:p-10">
+        <div className="mx-auto max-w-7xl rounded-[2.3rem] border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[rgba(7,23,35,0.78)] p-8 shadow-[0_32px_100px_rgba(0,0,0,0.24)] backdrop-blur md:p-10">
           <div className="grid gap-10 xl:grid-cols-[0.95fr_1.05fr] xl:items-end">
             <motion.div {...fadeUp} className="space-y-6">
               <SectionLabel>Contact</SectionLabel>
-              <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-white md:text-6xl">
+              <h2 className="font-headline text-4xl font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-slate-900 dark:text-white md:text-6xl">
                 Ready to transform your healthcare operations?
               </h2>
-              <p className="max-w-2xl text-lg leading-8 text-[#9bb4c7] md:text-xl">
+              <p className="max-w-2xl text-lg leading-8 text-slate-600 dark:text-[#9bb4c7] md:text-xl">
                 SuperGIT delivers HIS, ERP, NPHIES Connect, and CDSS — the integrated
                 solutions your facility needs to thrive in Saudi Arabia's digital
                 healthcare future.
@@ -1396,13 +1400,13 @@ export default function Home() {
                       delay: index * 0.05,
                     }}
                     whileHover={{ y: -5, scale: 1.01 }}
-                    className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5"
+                    className="rounded-[1.5rem] border border-slate-200 dark:border-white/10 bg-white/[0.04] p-5"
                   >
                     <Icon className="h-5 w-5 text-[hsl(var(--primary))]" />
-                    <p className="mt-4 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#8db3cf]">
+                    <p className="mt-4 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-slate-600 dark:text-[#8db3cf]">
                       {item.label}
                     </p>
-                    <p className="mt-2 text-lg font-medium text-white">{item.value}</p>
+                    <p className="mt-2 text-lg font-medium text-slate-900 dark:text-white">{item.value}</p>
                   </motion.div>
                 );
               })}
@@ -1412,12 +1416,12 @@ export default function Home() {
           <motion.form
             {...fadeUp}
             onSubmit={handleContactSubmit}
-            className="mt-8 grid gap-4 rounded-[1.8rem] border border-white/10 bg-[rgba(5,18,29,0.82)] p-6 md:grid-cols-2"
+            className="mt-8 grid gap-4 rounded-[1.8rem] border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[rgba(5,18,29,0.82)] p-6 md:grid-cols-2"
           >
             <div className="space-y-2">
               <label
                 htmlFor="contact-first-name"
-                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#8db3cf]"
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-slate-600 dark:text-[#8db3cf]"
               >
                 First name
               </label>
@@ -1428,17 +1432,17 @@ export default function Home() {
                 value={contactValues.firstName}
                 onChange={handleContactFieldChange}
                 placeholder="Ahmed"
-                className="w-full rounded-2xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/12 bg-white dark:bg-white/5 px-4 py-3 text-sm text-slate-900 dark:text-white outline-none transition-colors placeholder:text-slate-500 dark:placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
               />
               {contactErrors.firstName ? (
-                <p className="text-xs text-[#fda4af]">{contactErrors.firstName}</p>
+                <p className="text-xs text-slate-600 dark:text-[#fda4af]">{contactErrors.firstName}</p>
               ) : null}
             </div>
 
             <div className="space-y-2">
               <label
                 htmlFor="contact-last-name"
-                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#8db3cf]"
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-slate-600 dark:text-[#8db3cf]"
               >
                 Last name
               </label>
@@ -1449,17 +1453,17 @@ export default function Home() {
                 value={contactValues.lastName}
                 onChange={handleContactFieldChange}
                 placeholder="Alqahtani"
-                className="w-full rounded-2xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/12 bg-white dark:bg-white/5 px-4 py-3 text-sm text-slate-900 dark:text-white outline-none transition-colors placeholder:text-slate-500 dark:placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
               />
               {contactErrors.lastName ? (
-                <p className="text-xs text-[#fda4af]">{contactErrors.lastName}</p>
+                <p className="text-xs text-slate-600 dark:text-[#fda4af]">{contactErrors.lastName}</p>
               ) : null}
             </div>
 
             <div className="space-y-2">
               <label
                 htmlFor="contact-service"
-                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#8db3cf]"
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-slate-600 dark:text-[#8db3cf]"
               >
                 Select service
               </label>
@@ -1468,26 +1472,26 @@ export default function Home() {
                 name="service"
                 value={contactValues.service}
                 onChange={handleContactFieldChange}
-                className="w-full rounded-2xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/12 bg-white dark:bg-white/5 px-4 py-3 text-sm text-slate-900 dark:text-white outline-none transition-colors placeholder:text-slate-500 dark:placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
               >
-                <option value="" className="bg-[#0a1e2e] text-[#9cb7ca]">
+                <option value="" className="bg-white text-slate-600 dark:bg-[#0a1e2e] dark:text-[#9cb7ca]">
                   Select a service
                 </option>
                 {serviceOptions.map((service) => (
-                  <option key={service} value={service} className="bg-[#0a1e2e] text-white">
+                  <option key={service} value={service} className="bg-white text-slate-900 dark:bg-[#0a1e2e] dark:text-white">
                     {service}
                   </option>
                 ))}
               </select>
               {contactErrors.service ? (
-                <p className="text-xs text-[#fda4af]">{contactErrors.service}</p>
+                <p className="text-xs text-slate-600 dark:text-[#fda4af]">{contactErrors.service}</p>
               ) : null}
             </div>
 
             <div className="space-y-2">
               <label
                 htmlFor="contact-phone"
-                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#8db3cf]"
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-slate-600 dark:text-[#8db3cf]"
               >
                 Phone
               </label>
@@ -1498,17 +1502,17 @@ export default function Home() {
                 value={contactValues.phone}
                 onChange={handleContactFieldChange}
                 placeholder="+966 5X XXX XXXX"
-                className="w-full rounded-2xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/12 bg-white dark:bg-white/5 px-4 py-3 text-sm text-slate-900 dark:text-white outline-none transition-colors placeholder:text-slate-500 dark:placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
               />
               {contactErrors.phone ? (
-                <p className="text-xs text-[#fda4af]">{contactErrors.phone}</p>
+                <p className="text-xs text-slate-600 dark:text-[#fda4af]">{contactErrors.phone}</p>
               ) : null}
             </div>
 
             <div className="space-y-2">
               <label
                 htmlFor="contact-date"
-                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#8db3cf]"
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-slate-600 dark:text-[#8db3cf]"
               >
                 Date
               </label>
@@ -1518,17 +1522,17 @@ export default function Home() {
                 type="date"
                 value={contactValues.date}
                 onChange={handleContactFieldChange}
-                className="w-full rounded-2xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white outline-none transition-colors focus:border-[hsl(var(--primary))]/55"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/12 bg-white dark:bg-white/5 px-4 py-3 text-sm text-slate-900 dark:text-white outline-none transition-colors focus:border-[hsl(var(--primary))]/55"
               />
               {contactErrors.date ? (
-                <p className="text-xs text-[#fda4af]">{contactErrors.date}</p>
+                <p className="text-xs text-slate-600 dark:text-[#fda4af]">{contactErrors.date}</p>
               ) : null}
             </div>
 
             <div className="space-y-2">
               <label
                 htmlFor="contact-time"
-                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#8db3cf]"
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-slate-600 dark:text-[#8db3cf]"
               >
                 Time
               </label>
@@ -1538,17 +1542,17 @@ export default function Home() {
                 type="time"
                 value={contactValues.time}
                 onChange={handleContactFieldChange}
-                className="w-full rounded-2xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white outline-none transition-colors focus:border-[hsl(var(--primary))]/55"
+                className="w-full rounded-2xl border border-slate-200 dark:border-white/12 bg-white dark:bg-white/5 px-4 py-3 text-sm text-slate-900 dark:text-white outline-none transition-colors focus:border-[hsl(var(--primary))]/55"
               />
               {contactErrors.time ? (
-                <p className="text-xs text-[#fda4af]">{contactErrors.time}</p>
+                <p className="text-xs text-slate-600 dark:text-[#fda4af]">{contactErrors.time}</p>
               ) : null}
             </div>
 
             <div className="space-y-2 md:col-span-2">
               <label
                 htmlFor="contact-message"
-                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#8db3cf]"
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-slate-600 dark:text-[#8db3cf]"
               >
                 Message
               </label>
@@ -1559,10 +1563,10 @@ export default function Home() {
                 value={contactValues.message}
                 onChange={handleContactFieldChange}
                 placeholder="Tell us about your requirement."
-                className="w-full resize-none rounded-2xl border border-white/12 bg-white/5 px-4 py-3 text-sm leading-6 text-white outline-none transition-colors placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
+                className="w-full resize-none rounded-2xl border border-slate-200 dark:border-white/12 bg-white dark:bg-white/5 px-4 py-3 text-sm leading-6 text-slate-900 dark:text-white outline-none transition-colors placeholder:text-slate-500 dark:placeholder:text-[#7f9ab0] focus:border-[hsl(var(--primary))]/55"
               />
               {contactErrors.message ? (
-                <p className="text-xs text-[#fda4af]">{contactErrors.message}</p>
+                <p className="text-xs text-slate-600 dark:text-[#fda4af]">{contactErrors.message}</p>
               ) : null}
             </div>
 
@@ -1570,7 +1574,7 @@ export default function Home() {
               <button
                 type="submit"
                 data-magnetic
-                className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-7 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#04101a] transition-transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-7 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-600 dark:text-[#04101a] transition-transform hover:-translate-y-0.5"
               >
                 Start conversation
                 <ArrowRight className="h-4 w-4" />
@@ -1578,13 +1582,13 @@ export default function Home() {
             </div>
 
             {contactSuccess ? (
-              <p className="md:col-span-2 text-sm text-[#86efac]">
+              <p className="md:col-span-2 text-sm text-slate-600 dark:text-[#86efac]">
                 Your request has been captured. We will contact you shortly.
               </p>
             ) : null}
           </motion.form>
 
-          <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-[#88a6bc] md:flex-row md:items-center md:justify-between">
+          <div className="mt-10 flex flex-col gap-4 border-t border-slate-200 dark:border-white/10 pt-6 text-sm text-slate-600 dark:text-[#88a6bc] md:flex-row md:items-center md:justify-between">
             <p>Copyright &copy; 2026 SuperGIT. All rights reserved.</p>
             <p>Hira Street, Jeddah, Saudi Arabia &middot; Open 24/7</p>
           </div>

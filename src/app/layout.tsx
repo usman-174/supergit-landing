@@ -6,6 +6,7 @@ import { AmbientColorShift } from "@/components/AmbientColorShift";
 import { MagneticCursor } from "@/components/MagneticCursor";
 import { PageTransition } from "@/components/PageTransition";
 import { ParallaxBackground } from "@/components/ParallaxBackground";
+import { ThemeProvider } from "next-themes";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -40,6 +41,7 @@ export default function RootLayout({
       className={`${bodyFont.variable} ${headlineFont.variable}`}
     >
       <body className="font-body antialiased">
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
         <AmbientColorShift />
         <ParallaxBackground />
         <MagneticCursor />
@@ -48,6 +50,7 @@ export default function RootLayout({
           <PageTransition>{children}</PageTransition>
         </SmoothScrollProvider>
         <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

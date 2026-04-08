@@ -106,7 +106,7 @@ export function ParallaxBackground() {
         }}
       />
 
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(238,249,255,0.72)_0%,rgba(223,241,250,0.34)_36%,rgba(4,16,26,0.08)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(238,249,255,0.72)_0%,rgba(223,241,250,0.34)_36%,rgba(4,16,26,0.08)_100%)] dark:bg-[linear-gradient(180deg,rgba(4,16,26,0.05)_0%,rgba(4,16,26,0)_18%,rgba(4,16,26,0.24)_100%)]" />
     </div>
   );
 }
